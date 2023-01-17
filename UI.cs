@@ -1,6 +1,8 @@
 ﻿using System.Configuration;
 using System;
 using ConfigurationManager = System.Configuration.ConfigurationManager;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 
 namespace DataAPI
 {
@@ -58,10 +60,24 @@ namespace DataAPI
                     default:
                         Console.WriteLine("Have fun with the API!");
                         finished = true;
+                        //generateSSHKeys();
                         break;
                 }
             }
         }
+        //Implemented later, not relevant for initial tests
+        //private static void generateSSHKeys()
+        //{
+        //    using (var rsa = RSA.Create())
+        //    {
+        //        var request = new CertificateRequest("CN=MyServer", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        //        request.CertificateExtensions.Add(new X509KeyUsageExtension(X509KeyUsageFlags.DigitalSignature, false));
+        //        var certificate = request.CreateSelfSigned(DateTimeOffset.Now, DateTimeOffset.Now.AddYears(1));
+
+        //        var bytes = certificate.Export(X509ContentType.Pfx, "te2023");
+        //        File.WriteAllBytes("mycert.pfx", bytes);
+        //    }
+        //}
         private static string? ReadSetting(string key)
         {
             string? result = null;

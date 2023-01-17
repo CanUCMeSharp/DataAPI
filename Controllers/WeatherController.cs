@@ -17,29 +17,36 @@ namespace DataAPI
             //weather.Add(new Weather());
             //weather[0].Date = DateTime.Now;
             //"Server=localhost;Database=test;User Id=sa;Password=password;"
-            Console.WriteLine(WebApiConfig.DBConnectionString);
-            using (var connection = new SqlConnection(WebApiConfig.DBConnectionString))
+            try
             {
-                connection.Open();
-
-                using (var command = new SqlCommand("SELECT * FROM Weather", connection))
+                using (var connection = new SqlConnection(WebApiConfig.DBConnectionString))
                 {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var user = new Weather
-                            {
-                                Date = reader.GetDateTime(1),
-                                Temperature = reader.GetInt32(2),
-                                Rain = reader.GetInt32(3),
-                                Humidity = reader.GetInt32(4)
-                            };
+                    connection.Open();
 
-                            weather.Add(user);
+                    using (var command = new SqlCommand("SELECT * FROM Weather", connection))
+                    {
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var user = new Weather
+                                {
+                                    Date = reader.GetDateTime(1),
+                                    Temperature = reader.GetInt32(2),
+                                    Rain = reader.GetInt32(3),
+                                    Humidity = reader.GetInt32(4)
+                                };
+
+                                weather.Add(user);
+                            }
                         }
                     }
                 }
+                Console.WriteLine("HTTPGET: Forwaded Data to User");
+            }
+            catch
+            {
+                Console.WriteLine("HTTPGET: UNKOWN ERROR");
             }
 
             return Ok(weather);
