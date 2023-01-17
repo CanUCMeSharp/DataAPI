@@ -36,7 +36,7 @@ namespace DataAPI
                         break;
                     case 1:
                         Console.WriteLine("What's the IP of the SQL DB");
-                        WebApiConfig.DBConnectionString += "Server=" + Console.ReadLine() + ";";
+                        WebApiConfig.DBConnectionString = "Server=" + Console.ReadLine() + ";";
                         state++;
                         break;
                     case 2:

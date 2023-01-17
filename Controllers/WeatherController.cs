@@ -17,6 +17,7 @@ namespace DataAPI
             //weather.Add(new Weather());
             //weather[0].Date = DateTime.Now;
             //"Server=localhost;Database=test;User Id=sa;Password=password;"
+            Console.WriteLine(WebApiConfig.DBConnectionString);
             using (var connection = new SqlConnection(WebApiConfig.DBConnectionString))
             {
                 connection.Open();
@@ -29,10 +30,10 @@ namespace DataAPI
                         {
                             var user = new Weather
                             {
-                                Date = reader.GetDateTime(0),
-                                Temperature = reader.GetInt32(1),
-                                Rain = reader.GetInt32(2),
-                                Humidity = reader.GetInt32(3)
+                                Date = reader.GetDateTime(1),
+                                Temperature = reader.GetInt32(2),
+                                Rain = reader.GetInt32(3),
+                                Humidity = reader.GetInt32(4)
                             };
 
                             weather.Add(user);
