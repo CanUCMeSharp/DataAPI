@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace WeatherAPI
+namespace DataAPI
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -14,8 +14,10 @@ namespace WeatherAPI
         public ActionResult<List<Weather>> GetWeather()
         {
             var weather = new List<Weather>();
-
-            using (var connection = new SqlConnection("Server=localhost;Database=test;User Id=sa;Password=password;"))//Insert string
+            //weather.Add(new Weather());
+            //weather[0].Date = DateTime.Now;
+            //"Server=localhost;Database=test;User Id=sa;Password=password;"
+            using (var connection = new SqlConnection(WebApiConfig.DBConnectionString))
             {
                 connection.Open();
 
@@ -48,14 +50,13 @@ namespace WeatherAPI
             {
                 return;
             }
-            using (SqlConnection connection = new SqlConnection("Server=localhost;Database=test;User Id=sa;Password=password;"))//Insert string
+            using (SqlConnection connection = new SqlConnection(WebApiConfig.DBConnectionString))
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
-                    command.CommandText = "INSERT INTO LogTable (Date, DeviceId, Temperature, Rain, Humidity) VALUES (@deviceId, @date, @temperature)";
-                    command.Parameters.Add("@deviceId", SqlDbType.NVarChar);
+                    command.CommandText = "INSERT INTO Weather (MDate, Temperature, Rain, Humidity) VALUES (@date, @temperature, @rain, @humidity)";
                     command.Parameters.Add("@date", SqlDbType.DateTime);
                     command.Parameters.Add("@temperature", SqlDbType.Int);
                     command.Parameters.Add("@rain", SqlDbType.Int);
@@ -63,7 +64,6 @@ namespace WeatherAPI
 
                     foreach (var value in values)
                     {
-                        command.Parameters["@deviceId"].Value = deviceId;
                         command.Parameters["@date"].Value = value.Date;
                         command.Parameters["@temperature"].Value = value.Temperature;
                         command.Parameters["@rain"].Value = value.Rain;
@@ -76,7 +76,7 @@ namespace WeatherAPI
         }
         private void doStuffWithData()
         {
-            throw new NotImplementedException();
+            //do stuff
         }
     }
 }

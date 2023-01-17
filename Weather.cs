@@ -1,4 +1,4 @@
-namespace WeatherAPI
+namespace DataAPI
 {
     public class Weather
     {
